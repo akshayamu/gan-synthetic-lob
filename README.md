@@ -1,36 +1,23 @@
 # Synthetic LOB GAN Project
 
-## Overview
-This project builds a Generative Adversarial Network (GAN) to generate synthetic Limit Order Book (LOB) data for cryptocurrency markets.
+## Experiment Progression
 
-## Features
-- Real-time LOB data collection (720 snapshots)
-- Feature engineering and preprocessing
-- GAN implementation with TensorFlow/Keras
-- Statistical evaluation with KS-tests
-- Animated visualization for LinkedIn
+This project was developed iteratively, with each model choice motivated by
+quantitative evaluation rather than visual inspection.
 
-## Results
-- Data collected: ✅ 720 BTC/USD order book snapshots
-- GAN trained: ✅ Model generates synthetic samples
-- Evaluation: KS-statistic = 0.8690 (target < 0.05)
-- Visualization: Animated GIF created
+1. **Vanilla GAN (Full LOB, 40 features)**  
+   Initial experiments trained a standard GAN on full multi-level LOB snapshots.
+   Quantitative tests revealed poor distributional alignment on economically
+   meaningful quantities (high KS statistics on spread and depth).
 
-## Files
-- `collect_data.py` - LOB data collection
-- `process_features.py` - Data preprocessing
-- `train_gan.py` - GAN training
-- `evaluate_gan.py` - Statistical evaluation
-- `create_linkedin_content.py` - Visualization
+2. **Improved GAN (Stabilization Techniques)**  
+   Architectural changes (deeper networks, dropout, label smoothing) improved
+   training stability but did not materially improve realism or downstream
+   performance.
 
-## Next Steps
-- Improve GAN architecture
-- Hyperparameter tuning
-- More training data
+3. **WGAN-GP on Reduced Targets (Final Model)**  
+   Guided by evaluation results, the learning target was reduced to key LOB
+   marginals (spread and total depth), and the loss was replaced with a
+   Wasserstein objective with gradient penalty (WGAN-GP). This resulted in
+   substantial reductions in distributional divergence.
 
-## How to Run
-1. Collect data: `python collect_data.py`
-2. Process features: `python process_features.py`
-3. Train GAN: `python train_gan.py`
-4. Evaluate: `python evaluate_gan.py`
-5. Create visualization: `python create_linkedin_content.py`
