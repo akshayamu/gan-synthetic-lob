@@ -51,3 +51,35 @@ learning target to economically meaningful quantities significantly reduced
 distributional divergence. These results are consistent with prior findings that
 stable objectives and reduced targets are critical for synthetic LOB generation under
 limited data regimes.
+
+Quantitative Evaluation (Real vs Synthetic LOB)
+
+To assess realism beyond visual inspection, we compare key microstructure features
+between real and GAN-generated limit order book (LOB) snapshots.
+
+Features evaluated (per snapshot):
+
+Bid–ask spread
+
+Total bid depth (sum of top-10 bid sizes)
+
+Total ask depth (sum of top-10 ask sizes)
+
+We report summary statistics and the Kolmogorov–Smirnov (KS) statistic
+to quantify distributional similarity
+| Feature         | Real Mean | Synthetic Mean | KS Statistic |
+| --------------- | --------- | -------------- | ------------ |
+| Spread          | 1.33      | 0.57           | **0.77**     |
+| Total Bid Depth | 1.60e-4   | 1.64e-4        | **0.58**     |
+| Total Ask Depth | 1.69      | 1.73           | **0.52**     |
+
+Notes:
+
+Depth statistics show close alignment in first-order moments.
+
+Spread distribution exhibits mode collapse, reflected by a high KS statistic.
+
+These results motivate future improvements such as WGAN-GP objectives and
+temporal conditioning.
+
+This evaluation ensures the model’s limitations are quantified and transparent.
